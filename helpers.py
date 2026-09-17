@@ -306,8 +306,9 @@ def get_tokenizer(data_dir="data"):
     return GPT2Tokenizer(path)
 
 data = {}
-data['train'] = np.memmap(f"data/train.bin", dtype=np.uint16, mode="r")
-data['val'] = np.memmap(f"data/val.bin", dtype=np.uint16, mode="r")
+if os.path.exists("data/train.bin"):
+    data['train'] = np.memmap(f"data/train.bin", dtype=np.uint16, mode="r")
+    data['val'] = np.memmap(f"data/val.bin", dtype=np.uint16, mode="r")
 def get_batch(split, cfg, batch_size, device="cuda"):
     """A random batch of (inputs, targets) from the token stream."""
     D = data[split]
